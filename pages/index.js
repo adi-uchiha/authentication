@@ -2,13 +2,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import Form from '../components/Form'
 import dbConnect from '../lib/dbConnect'
-import user from '../models/User'
+import User from '../models/User'
 
 
 const Index = ( {users}) => {
-  const router = useRouter()
-  const contentType = 'application/json'
+const router = useRouter()
+const contentType = 'application/json'
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
 
@@ -50,6 +51,8 @@ const Index = ( {users}) => {
   function handleSubmit(e){
     e.preventDefault()
     postData(form)
+    
+    
   }
 
   
@@ -99,7 +102,7 @@ export default Index
 export async function getServerSideProps(){
   await dbConnect();
 
-  const result = await user.find({})
+  const result = await User.find({})
 
   const pets = result.map((doc) => {
     const pet = doc.toObject()
